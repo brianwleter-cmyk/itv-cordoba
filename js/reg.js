@@ -124,10 +124,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if(confBtn) {
-        confBtn.addEventListener('click', () => {
-            confBtn.textContent = "Cargando...";
-            window.location.href = 'pago.html';
-        });
+   if(confBtn) {
+    confBtn.addEventListener('click', () => {
+        confBtn.textContent = "Cargando...";
+
+        // Guardamos el email antes de ir a la pantalla de pago
+        const emailInput = document.getElementById('email');
+        if (emailInput) {
+            sessionStorage.setItem('correoGuardado', emailInput.value);
+        }
+
+        window.location.href = 'pago.html';
+    });
+}
+
     }
 });
