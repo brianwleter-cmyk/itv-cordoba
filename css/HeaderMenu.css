@@ -1,0 +1,189 @@
+﻿* {
+    list-style: none;
+}
+/* defining the menu container here */
+
+.MobileMenu {
+    display: none;
+}
+
+.HeaderMenu {
+    display: block;
+    font: 400 1.1em/1.4 'Open Sans';
+    text-align: center;
+}
+
+    .HeaderMenu ul.level1 {
+        float: left;
+        margin-left: 10em;
+    }
+
+        .HeaderMenu ul.level1 > li {
+            float: left;
+        }
+
+        .HeaderMenu ul.level1 a.level1 {
+            color: rgb(0,0,255);
+            text-decoration: none;
+            font-size: 15px;
+            font-family: 'Open Sans';
+            line-height: 26px;
+            border: none;
+            display: block;
+            position: relative;
+            padding: 12px 0 12px 27px;
+            font-weight: 400;
+        }
+
+
+            .HeaderMenu ul.level1 a.level1:hover {
+                color: rgb(130, 181, 65);
+            }
+
+@media screen and (max-width:1800px) {
+    .MobileMenu {
+        display: none;
+    }
+
+    .HeaderMenu {
+        display: block;
+        font: 400 1.1em/1.4 'Open Sans';
+        text-align: center;
+    }
+
+        .HeaderMenu ul.level1 {
+            float: left;
+            margin-left: 1em;
+        }
+
+            .HeaderMenu ul.level1 > li {
+                float: left;
+            }
+
+            .HeaderMenu ul.level1 a.level1 {
+                color: rgb(0,0,255);
+                text-decoration: none;
+                font-size: 15px;
+                font-family: 'Open Sans';
+                line-height: 26px;
+                border: none;
+                display: block;
+                position: relative;
+                padding: 12px 0 20px 50px;
+            }
+
+
+                .HeaderMenu ul.level1 a.level1:hover {
+                    color: rgb(130, 181, 65);
+                }
+}
+
+@media screen and (max-width:1189px) {
+    .MobileMenu {
+        display: none;
+    }
+
+    .HeaderMenu {
+        display: block;
+        font: 400 1.1em/1.4 'Open Sans';
+        text-align: center;
+    }
+
+        .HeaderMenu ul.level1 {
+            float: left;
+            margin-left: 1em;
+        }
+
+            .HeaderMenu ul.level1 > li {
+                float: left;
+            }
+
+            .HeaderMenu ul.level1 a.level1 {
+                color: rgb(0,0,255);
+                text-decoration: none;
+                font-size: 15px;
+                font-family: 'Open Sans';
+                line-height: 26px;
+                border: none;
+                display: block;
+                position: relative;
+                padding: 12px 12px 18px 0;
+            }
+
+                .HeaderMenu ul.level1 a.level1:hover {
+                    color: rgb(130, 181, 65);
+                }
+}
+
+@media screen and (max-width:767px) {
+    .MobileMenu {
+        display: none;
+    }
+
+    .HeaderMenu {
+        display: block;
+        font: 400 1.1em/1.4 'Open Sans';
+        text-align: center;
+    }
+
+        .HeaderMenu ul.level1 {
+            float: left;
+            margin-left: .2em;
+        }
+
+            .HeaderMenu ul.level1 > li {
+                float: left;
+            }
+
+            .HeaderMenu ul.level1 a.level1 {
+                color: rgb(0,0,255);
+                text-decoration: none;
+                font-size: 10px;
+                font-family: 'Open Sans';
+                line-height: 26px;
+                border: none;
+                display: block;
+                position: relative;
+                padding: 0 4px 4px 0;
+            }
+
+                .HeaderMenu ul.level1 a.level1:hover {
+                    color: rgb(130, 181, 65);
+                }
+}
+
+@media screen and (max-width: 480px) {
+    .HeaderMenu {
+        display: none;
+    }
+
+    .MobileMenu {
+        display: block;
+    }
+
+        .MobileMenu ul.level1 {
+            display: inline-grid;
+            position: relative;
+            height: 14px;
+        }
+
+            .MobileMenu ul.level1 > li {
+                display: inline-grid;
+                height: 14px;
+            }
+
+            .MobileMenu ul.level1 a.level1 {
+                color: rgb(0,0,255);
+                text-decoration: none;
+                font-size: small;
+                font-family: 'Open Sans';
+                display: inline-grid;
+                height: 14px;
+            }
+
+                .MobileMenu ul.level1 a.level1:hover {
+                    color: rgb(130, 181, 65);
+                }
+
+    
+}

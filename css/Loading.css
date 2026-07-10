@@ -1,0 +1,65 @@
+﻿.fullscreenoverlay
+{
+    position: fixed;
+    z-index: 9998;
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    filter: Alpha(Opacity=50);
+    opacity: 0.50;
+    -moz-opacity: 0.50;
+}
+.overlay
+{
+    position: fixed;
+    z-index: 9999;
+    background-color: #777777;
+    width: 200px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -100px;
+    filter: Alpha(Opacity=100);
+    opacity: 1.00;
+    -moz-opacity: 1.00;
+}
+.spinoverlay
+{
+    position: fixed;
+    z-index: 9999;
+    background-color: #777777;
+    width: 72px;
+    height: 72px;
+    top: 50%;
+    left: 50%;
+    margin-top: -36px;
+    margin-left: -36px;
+    filter: Alpha(Opacity=100);
+    opacity: 1.00;
+    -moz-opacity: 1.00;
+}
+.loader
+{
+    z-index: 10000;
+    position: fixed;
+    width: 100px;
+    height: 30px;
+    margin-top: -15px;
+    margin-left: -50px;
+    top: 50%;
+    left: 50%;
+}
+.spinloader
+{
+    z-index: 10000;
+    position: fixed;
+    width: 72px;
+    height: 72px;
+    margin-top: -36px;
+    margin-left: -36px;
+    top: 50%;
+    left: 50%;
+}

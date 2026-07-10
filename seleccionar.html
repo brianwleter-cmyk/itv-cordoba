@@ -1,0 +1,180 @@
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>ITV Córdoba - Selección de Turno</title>
+    <script src="https://cdn.tailwindcss.com/"></script>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <style>
+        /* ESTILO ADMINISTRATIVO CLÁSICO - ADAPTADO */
+        html, body {
+            min-height: 100%; /* Cambiado de height: 100% */
+            margin: 0;
+            background-color: #f4f4f4;
+            font-family: 'Verdana', 'Tahoma', sans-serif !important; 
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            /* Eliminado overflow: hidden para permitir scroll */
+        }
+
+        header {
+            background: #ffffff;
+            padding: 15px 0; /* Un poco más compacto */
+            border-bottom: 3px solid #2c5282;
+            flex-shrink: 0;
+        }
+
+        /* Nav adaptable */
+        nav {
+            flex-wrap: wrap; /* Para que los links bajen si no entran */
+            gap: 5px;
+        }
+
+        nav a {
+            color: #333 !important;
+            font-size: 11px; /* Ligeramente más chico para móvil */
+            font-weight: bold;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+
+        nav a:hover {
+            color: #2c5282 !important;
+            text-decoration: underline;
+        }
+
+        /* CONTENEDOR TIPO TRÁMITE OFICIAL */
+        .main-card {
+            background: #ffffff;
+            max-width: 850px;
+            margin: 20px auto; /* Agregado margen para que no toque los bordes */
+            padding: 30px; /* Reducido de 40px */
+            border: 1px solid #ccc;
+            border-radius: 0; 
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #000;
+            font-size: 18px; /* Ajustado para móvil */
+            font-weight: bold;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        /* BOTONES SÓLIDOS Y CUADRADOS */
+        .btn-turno {
+            background-color: #2c5282 !important;
+            color: #fff !important;
+            border-radius: 2px !important;
+            padding: 35px 15px !important; /* Un poco menos de padding vertical */
+            font-weight: bold !important;
+            font-size: 15px !important;
+            border: 1px solid #1a365d;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .btn-turno:hover {
+            background-color: #1a3a63 !important;
+        }
+
+        /* PIE DE PÁGINA SOBRIO */
+        footer {
+            margin-top: auto;
+            background: #ddd;
+            padding: 15px;
+            font-size: 10px;
+            color: #555;
+            border-top: 1px solid #bbb;
+            flex-shrink: 0;
+        }
+
+        .info-box {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #444;
+            background: #fff8e1;
+            padding: 15px;
+            border: 1px solid #ffe082;
+            text-align: left;
+        }
+
+        /* --- MEDIA QUERIES PARA MÓVIL --- */
+        @media (max-width: 640px) {
+            .main-card {
+                padding: 20px;
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+
+            h1 {
+                font-size: 16px;
+                text-align: center;
+            }
+
+            .btn-turno {
+                padding: 25px 10px !important; /* Botones menos altos en móvil */
+                font-size: 14px !important;
+            }
+
+            nav a {
+                font-size: 10px;
+                padding: 5px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-center">
+
+    <header>
+        <img alt="ITV logo" class="mx-auto" src="img/dual_logo.png" style="width: 100%; max-width: 300px; height: auto;"/>
+        
+        <nav class="mt-4 flex justify-center">
+            <a href="#">PERFIL CORPORATIVO</a>
+            <a href="#">TURNOS</a>
+            <a href="#">PLANTAS</a>
+            <a href="#">AYUDA</a>
+        </nav>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center p-2">
+        <div class="main-card w-full">
+            <h1>SOLICITUD DE TURNO - SELECCIONE CATEGORÍA</h1>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
+                <button onclick="window.location.href='paso2.html'" class="btn-turno" type="button">
+                    INSPECCIÓN GENERAL
+                </button>
+                
+                <button onclick="window.location.href='paso2.html'" class="btn-turno" type="button">
+                    TAXIS / REMISES
+                </button>
+            </div>
+            
+            <div class="info-box">
+                <strong>IMPORTANTE:</strong> Para confirmar el turno deberá completar el pago de la tasa correspondiente de forma online. Tenga a mano la cédula del vehículo.
+            </div>
+        </div>
+    </main>
+
+    <footer class="flex justify-center items-center sm:space-x-8">
+        <span>VERSIÓN DEL SISTEMA: 17.04</span>
+        <img alt="Argentina" src="img/arg.png" width="20" class="hidden sm:inline" />
+        <span>© 2026 MUNICIPALIDAD DE CÓRDOBA - ITV</span>
+    </footer>
+
+</body>
+</html>

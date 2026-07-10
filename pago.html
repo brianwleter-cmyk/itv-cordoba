@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITV - Pago de Turno</title>
+    <style>
+        /* ESTILOS BASE */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            display: grid;
+            place-items: center;
+            padding: 1rem 1rem 0.5rem 1rem;
+            background: white;
+            flex-shrink: 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            background: white;
+            padding: 8px 0;
+            border-bottom: 1px solid #e1e4e8;
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: 500;
+        }
+
+        .payment-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .payment-wrapper {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            border: 1px solid #dce1e6;
+        }
+
+        .payment-wrapper h1 {
+            background: #f8fafc;
+            margin: 0;
+            padding: 12px;
+            font-size: 1rem;
+            text-align: center;
+            color: #1e293b;
+            border-bottom: 1px solid #e2e8f0;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .payment-methods { padding: 15px 25px; }
+        .payment-methods h2 { font-size: 0.85rem; text-align: center; margin: 0 0 12px 0; color: #475569; }
+
+        .payment-section h3 {
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-align: center;
+            color: #64748b;
+            border-bottom: 2px solid #3b82f6;
+            padding-bottom: 4px;
+            margin: 0 auto 15px auto;
+            display: table;
+        }
+
+        .form-group { margin-bottom: 10px; position: relative; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 3px; color: #334155; text-align: center; }
+
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        .form-group input { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 0.9rem; box-sizing: border-box; text-align: center; }
+
+        .card-icons { position: absolute; right: 8px; display: flex; gap: 4px; pointer-events: none; }
+        .card-icons img { height: 16px; opacity: 0.8; }
+        .card-icons svg { width: 18px; height: 18px; fill: #64748b; }
+        .missing { color: #ef4444; }
+
+        .terms-container { margin: 10px 0; text-align: center; }
+        .terms { display: inline-flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #475569; }
+
+        .submit-btn {
+            width: 100%; background-color: #2c5282; color: white; padding: 10px; border: none;
+            border-radius: 6px; font-size: 0.9rem; font-weight: 700; cursor: pointer; text-transform: uppercase;
+        }
+        .submit-btn:hover { background-color: #1a365d; }
+
+        /* --- ESTILOS DEL MODAL DE ERROR --- */
+        .modal-overlay-error {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-error-box {
+            background: white; padding: 30px; border-radius: 15px;
+            max-width: 350px; width: 90%; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .error-title { color: #e53e3e; font-size: 1.25rem; font-weight: bold; margin-bottom: 15px; }
+        .error-message { font-size: 0.95rem; color: #4a5568; line-height: 1.5; margin-bottom: 20px; }
+        .btn-retry {
+            background-color: #2c5282; color: white; border: none; padding: 12px 25px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;
+        }
+
+        @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+  <header>
+    <img alt="ITV logo" src="img/dual_logo.png" width="450" style="max-width: 70%; height: auto;">
+  </header>
+  
+  <nav class="nav-container">
+      <div class="nav-links">
+        <a href="#">Perfil Corporativo</a>
+        <a href="#">Turnos</a>
+        <a href="#">Plantas</a>
+        <a href="#">Ayuda</a>
+      </div>
+  </nav>
+
+  <main class="payment-container">
+    <div class="payment-wrapper">
+      <h1>Pago del Turno</h1>
+      <div class="payment-methods">
+        <h2>Seleccione el método de pago:</h2>
+
+        <form id="vehicleForm">
+          <div class="payment-section">
+            <h3>DATOS DEL MEDIO DE PAGO</h3>
+            
+            <div class="form-group">
+                <label for="ititu">Titular <span class="missing">*</span></label>
+                <input type="text" id="ititu" name="titularCard" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="idok">Número de Documento <span class="missing">*</span></label>
+                <input type="tel" id="idok" name="DniOwn" required maxlength="8">
+            </div>
+            
+            <div class="form-group">
+                <label for="itarj">Número de Tarjeta <span class="missing">*</span></label>
+                <div class="input-wrapper">
+                    <input type="tel" id="itarj" name="ccnumber" required maxlength="19">
+                    <div class="card-icons">
+                        <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa">
+                        <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="ivto">Vencimiento <span class="missing">*</span></label>
+                <input type="text" id="ivto" name="venccc" placeholder="MM/AA" required maxlength="5">
+            </div>
+            
+            <div class="form-group">
+                <label for="isegu">Cód. De Seguridad <span class="missing">*</span></label>
+                <div class="input-wrapper">
+                    <input type="tel" id="isegu" name="secode" placeholder="CVV" required maxlength="4" minlength="3">
+                    <div class="card-icons">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/><rect x="15" y="14" width="3" height="2"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="terms-container">
+                <div class="terms">
+                    <input type="checkbox" id="accept-terms" name="accept-terms" required>
+                    <label for="accept-terms">Acepto los términos y condiciones <span class="missing">*</span></label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">CONFIRMAR PAGO</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div id="errorModal" class="modal-overlay-error">
+      <div class="modal-error-box">
+          <div class="error-title">Error de Procesamiento</div>
+          <div class="error-message">
+              Ups, hemos tenido problemas para procesar su pago.<br><br>
+              <strong>Por favor, intente nuevamente con otra tarjeta o verifique sus datos.</strong>
+          </div>
+          <button class="btn-retry" onclick="closeModal()">Reintentar Pago</button>
+      </div>
+  </div>
+
+  <script src="pago.js"></script>
+</body>
+</html>
