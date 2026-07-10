@@ -1,8 +1,8 @@
 // Objeto que asocia cada planta con su mapa en Google Maps
 const maps = {
-    '99': '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.656501170783!2d-64.2464197!3d-31.3960002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94329930f73f8a6b%3A0x6b49911961e9389e!2sITV%20Chateau!5e0!3m2!1ses-419!2sar!4v1700000000000" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe><div style="font-size:0.8rem; margin-top:10px;"><strong>Horarios:</strong><br>Lun a Vie: 08-16:45 hs. | Sáb: 08-12:45 hs.</div>',
-    '10': '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3408.204561021445!2d-64.1565257!3d-31.3257127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x943297f642646d9d%3A0x7d6b38c35064e45!2sITV%20Circunvalaci%C3%B3n!5e0!3m2!1ses-419!2sar!4v1700000000001" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe><div style="font-size:0.8rem; margin-top:10px;"><strong>Horarios:</strong><br>Lun a Vie: 08-16:45 hs. | Sáb: 08-12:45 hs.</div>',
-    '11': '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3407.32483120144!2d-64.1865257!3d-31.3557127!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x943298f642646d9d%3A0x7d6b38c35064e46!2sITV%20Jap%C3%B3n!5e0!3m2!1ses-419!2sar!4v1700000000002" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe><div style="font-size:0.8rem; margin-top:10px;"><strong>Horarios:</strong><br>Lun a Vie: 08-16:45 hs. | Sáb: 08-12:45 hs.</div>',
+    '99': '<iframe src="https://google.com" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe><div style="font-size:0.8rem; margin-top:10px;"><strong>Horarios:</strong><br>Lun a Vie: 08-16:45 hs. | Sáb: 08-12:45 hs.</div>',
+    '10': '<iframe src="https://google.com" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe><div style="font-size:0.8rem; margin-top:10px;"><strong>Horarios:</strong><br>Lun a Vie: 08-16:45 hs. | Sáb: 08-12:45 hs.</div>',
+    '11': '<iframe src="https://google.com" width="100%" height="250" style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy"></iframe><div style="font-size:0.8rem; margin-top:10px;"><strong>Horarios:</strong><br>Lun a Vie: 08-16:45 hs. | Sáb: 08-12:45 hs.</div>',
 };
 
 // Función que muestra el mapa de acuerdo con la planta seleccionada
@@ -59,7 +59,7 @@ function showModal(formData) {
     document.getElementById('confirmationNumber').textContent = generateConfirmationNumber();
     document.getElementById('modalName').textContent = formData.get('nombre');
     
-    // Extraer texto del vehículo (quitando el precio del texto si lo hubiera)
+    // Extraer texto del vehículo
     const vOption = vehicleTypeSelect.options[vehicleTypeSelect.selectedIndex];
     const vText = vOption.text.split('(')[0].trim(); 
     const patente = formData.get('patente').toUpperCase();
@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('appointmentForm');
     const fechaInput = document.getElementById('fecha');
 
-    // REGLA DE CALENDARIO: Desde 6 de Febrero y Bloqueo de Domingos
+    // REGLA DE CALENDARIO
     if (fechaInput) {
         fechaInput.setAttribute('min', '2026-02-06');
         
         fechaInput.addEventListener('input', function() {
             const dateSelected = new Date(this.value + 'T00:00:00');
-            const dayOfWeek = dateSelected.getUTCDay(); // 0 = Domingo
+            const dayOfWeek = dateSelected.getUTCDay();
 
             if (dayOfWeek === 0) {
                 alert("Las plantas de ITV no operan los domingos. Por favor, seleccione de lunes a sábado.");
@@ -101,11 +101,17 @@ document.addEventListener('DOMContentLoaded', function() {
         updateMap();
     }
 
-    // Evento de envío del formulario
+    // Evento de envío del formulario (Aquí guardamos el correo de forma limpia)
     if(form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (validateForm()) {
+                // GUARDADO AUTOMÁTICO DEL EMAIL AL ENVIAR EL FORMULARIO
+                const emailInput = document.getElementById('email');
+                if (emailInput) {
+                    sessionStorage.setItem('correoGuardado', emailInput.value);
+                }
+
                 const data = new FormData(form);
                 showModal(data);
             } else {
@@ -124,19 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-   if(confBtn) {
-    confBtn.addEventListener('click', () => {
-        confBtn.textContent = "Cargando...";
-
-        // Guardamos el email antes de ir a la pantalla de pago
-        const emailInput = document.getElementById('email');
-        if (emailInput) {
-            sessionStorage.setItem('correoGuardado', emailInput.value);
-        }
-
-        window.location.href = 'pago.html';
-    });
-}
-
+    if(confBtn) {
+        confBtn.addEventListener('click', () => {
+            confBtn.textContent = "Cargando...";
+            window.location.href = 'pago.html';
+        });
     }
 });
